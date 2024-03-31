@@ -13,21 +13,27 @@
         <div v-for="(project, index) in projects" :key="project.id">
             <div class="bg-blue-600 mb-4 p-2 rounded-lg shadow-md">
                 <h2 class="font-bold text-xl">{{ index + 1 }} {{ project.name }}</h2>
-                <!-- Image cliquable représentant le projet -->
-                <div class="flex items-center justify-around">
-                <img @click="redirectToGithub(project.githubUrl,)" :src="getProjectImage(index)" alt="Project Image" class="cursor-pointer">
+                <!-- Bouton pour ouvrir le modal -->
+                <button @click="openModal(index)" class="bg-lime-700 px-2 py-1 rounded-md mb-2">View Image</button>
+                <!-- Modal pour afficher l'image -->
+                <div :class="{ 'hidden': !modalOpen || modalIndex !== index }" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75">
+                    <div class="bg-white p-4 max-w-md mx-auto rounded-lg shadow-md">
+                        <img :src="getProjectImage(index)" alt="Project Image" class="w-full">
+                        <!-- Bouton pour fermer le modal -->
+                        <button @click="closeModal" class="block mx-auto bg-red-600 px-2 py-1 rounded-md mt-2">Close</button>
+                    </div>
                 </div>
+                <!-- Bouton pour rediriger vers GitHub -->
+                <button @click="redirectToGithub(project.githubUrl)" class="bg-gray-200 px-2 py-1 rounded-md">GitHub</button>
             </div>
         </div>
         
         <!-- Boucle pour afficher les projets statiques avec document à télécharger -->
         <div v-for="(project, index) in downloadableProjects" :key="project.id">
             <div class="bg-blue-600 mb-4 p-2 rounded-lg shadow-md">
-                <h2 class="font-bold text-xl">3 {{ project.name }}</h2>
+                <h2 class="font-bold text-xl">{{ index + 1 }} {{ project.name }}</h2>
                 <!-- Bouton pour télécharger le document -->
-                <div class="flex items-center justify-around">
-                    <img @click="downloadDocument(project.downloadUrl, 'Cahier des charges')" src="../assets/imgs/logo-1.png" alt="" class="cursor-pointer">
-                </div>
+                <button @click="downloadDocument(project.downloadUrl, 'Cahier des charges')" class="bg-gray-200 px-2 py-1 rounded-md">Download Document</button>
             </div>
         </div>
     </div>
@@ -52,9 +58,13 @@ const downloadableProjects = ref([
 
 // Images pour les projets GitHub
 const projectImages = [
-    "../src/assets/imgs/25379.png",
-    "../src/assets/imgs/909263.png",
+    "../src/assets/imgs/9D8A9EAC-D693-4269-AA15-DC19E4184099.jpeg",
+    "../src/assets/imgs/B8F01A69-7122-4EC8-9A0C-2A33E1A89407.jpeg",
 ];
+
+// Variables pour le modal
+const modalOpen = ref(false);
+const modalIndex = ref(0);
 
 // Fonction pour rediriger vers GitHub
 const redirectToGithub = (url) => {
@@ -73,6 +83,17 @@ const downloadDocument = (url, fileName) => {
     link.addEventListener('load', () => {
         document.body.removeChild(link);
     });
+}
+
+// Fonction pour ouvrir le modal
+const openModal = (index) => {
+    modalOpen.value = true;
+    modalIndex.value = index;
+}
+
+// Fonction pour fermer le modal
+const closeModal = () => {
+    modalOpen.value = false;
 }
 
 // Fonction pour obtenir l'image du projet en fonction de l'index
