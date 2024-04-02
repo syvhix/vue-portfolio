@@ -31,7 +31,7 @@
         <!-- Boucle pour afficher les projets statiques avec document à télécharger -->
         <div v-for="(project, index) in downloadableProjects" :key="project.id">
             <div class="bg-blue-600 mb-4 p-2 rounded-lg shadow-md">
-                <h2 class="font-bold text-xl">{{ index + 1 }} {{ project.name }}</h2>
+                <h2 class="font-bold text-xl"> 3 {{ project.name }}</h2>
                 <!-- Bouton pour télécharger le document -->
                 <button @click="downloadDocument(project.downloadUrl, 'Cahier des charges')" class="bg-gray-200 px-2 py-1 rounded-md">Download Document</button>
             </div>
