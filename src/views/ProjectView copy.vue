@@ -10,7 +10,7 @@
     <div v-if="error" class="text-red-500 text-center">{{ error }}</div>
 
     <!-- Boucle pour afficher les projets récupérés depuis l'API GitHub -->
-    <div v-for="(project, index) in projects" :key="project.id">
+    <div v-for="(project, index) in projectsTest" :key="project.id">
       <div class="bg-blue-600 mb-4 p-2 rounded-lg shadow-md">
         <h2 class="font-bold text-xl">{{ index + 1 }} {{ project.name }}</h2>
         <!-- Bouton pour ouvrir le modal -->
@@ -42,24 +42,10 @@
         </div>
         <!-- Bouton pour rediriger vers GitHub -->
         <button
-          @click="redirectToGithub(project.githubUrl)"
+          @click="redirectToGithub(project.url)"
           class="bg-gray-200 px-2 py-1 rounded-md"
         >
-          GitHub
-        </button>
-      </div>
-    </div>
-
-    <!-- Boucle pour afficher les projets statiques avec document à télécharger -->
-    <div v-for="(project, index) in downloadableProjects" :key="project.id">
-      <div class="bg-blue-600 mb-4 p-2 rounded-lg shadow-md">
-        <h2 class="font-bold text-xl">3 {{ project.name }}</h2>
-        <!-- Bouton pour télécharger le document -->
-        <button
-          @click="downloadDocument(project.downloadUrl, 'Cahier des charges')"
-          class="bg-gray-200 px-2 py-1 rounded-md"
-        >
-          Download Document
+          {{ projects.type === "code" ? "GitHub" : "Cahier des Charges" }}
         </button>
       </div>
     </div>
@@ -89,6 +75,33 @@ const projectImages = [
   "../src/assets/imgs/9D8A9EAC-D693-4269-AA15-DC19E4184099.jpeg",
   "../src/assets/imgs/B8F01A69-7122-4EC8-9A0C-2A33E1A89407.jpeg",
 ];
+
+const projectsTest = ref([
+  {
+    name: "Projet 1",
+    type: "code",
+    url: "https://google.com",
+    thumbnail: "../assets/...",
+  },
+  {
+    name: "Projet 1",
+    type: "document",
+    url: "https://google.com",
+    thumbnail: "",
+  },
+  {
+    name: "Projet 1",
+    type: "code",
+    url: "https://google.com",
+    thumbnail: "../assets/...",
+  },
+  {
+    name: "Projet 1",
+    type: "code",
+    url: "https://google.com",
+    thumbnail: "../assets/...",
+  },
+]);
 
 // Variables pour le modal
 const modalOpen = ref(false);
